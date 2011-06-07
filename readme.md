@@ -33,7 +33,7 @@ On the plate for pssh is an scp command with multifile support (ie pssh send fil
 
 
 
-pssh is Copyright [2011] [Greg Nokes]
+**pssh is Copyright [2011] [Greg Nokes]**
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this program except in compliance with the License.
