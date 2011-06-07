@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+echo 'Using RVM to install .rvmrc and needed gems'
+
+# Installing rubies 
+#rvm install 1.9.2
+rvm use 1.9.2
+rvm gemset create pssh
+rvm gemset use pssh
+rm .rvmrc
+echo "rvm 1.9.2@pssh" < .rvmrc
+rvm rvmrc trust .rvmrc
+cd .
+gem install fog --no-ri --no-rdoc
+
+echo "still need to edit config.rb and pssh.rb - you'll want to change everything in the config.rb, and the @pathing variable in the pssh.rb"

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+
+###
+# pssh 1.0
+# a ssh abstraction layer (c) Point Inside
+###
+
+###
+# We accept a single commandline argument
+# the server that you want to pssh to
+# or list to generate a list of psshable servers
+###
+
+
+rvm use 1.9.2@pssh && ruby /Users/tsykoduk/Code/pssh/lib/pssh.rb $1
