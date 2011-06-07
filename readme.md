@@ -7,7 +7,7 @@ There is a bit of setup needed, and a few ways of approaching it.
 
 The most scaleable is a central key repository. We tend to create a /srv/keys directory, and grant folks access to which ever keys they need based on groups (ie, perhaps the sysadmin group needs access to servers 1 and 2, and the devs need access to servers a and b. chown the key for servers 1 and 2 root:sysadmin and the key for a and b root:devs - chmod 640 the entire lot. If the sysadmins also need access to a and b, just put them into the dev group as well.)
 
-I default to a group called "staff" as the general "can go everywhere" type of person. If you want to use a diffrent
+I default to a group called "staff" as the general "can go everywhere" type of person. If you want to use a diffrent group - just make sure that you change that in the settings.
 
 I personally put a symlink to pssh into /bin - and then drop it in a logical place. Users can then just fire off pssh from where ever they are at.
 
