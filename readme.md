@@ -3,6 +3,19 @@
 
 Proxy Secure SHell - a SSH automation tool suitable for use as bastion ssh server, or general hand holder. At this time, only works on AWS. Since it's built on the killer @fog gem, it can be easily expanded.
 
+**Wait, what?**
+
+So, this basically allows us to abstract key management away from the user. The most common use case would be to have a publicly accessible server, with authentication done via the user's ssh keys. When the user sshed into the pssh server, they would be able to use the command line:
+ 
+*pssh ServerName*
+
+and have an SSH session setup and executed for them, with out knowing what keys the internal server needed, the ip address of the internal server or any other boring details.
+
+Taking things a step further, you can restrict all of your internal server's SSH access to just the pssh server(s) ip address, basically creating a choke point for ssh access. Also, when you need to change keys (you do change your keys every 6 - 12 months, right?) it's as easy as just adding the new key files to the pssh server. The users need never know that anything happened.
+
+
+**Getting Started**
+
 There is a bit of setup needed, and a few ways of approaching it.
 
 The most scaleable is a central key repository. We tend to create a /srv/keys directory, and grant folks access to which ever keys they need based on groups (ie, perhaps the sysadmin group needs access to servers 1 and 2, and the devs need access to servers a and b. chown the key for servers 1 and 2 root:sysadmin and the key for a and b root:devs - chmod 640 the entire lot. If the sysadmins also need access to a and b, just put them into the dev group as well.)
@@ -30,7 +43,9 @@ group - the group that has access to this box. ie sysadmin or devs
 
 On the plate for pssh is an scp command with multifile support (ie pssh send file1 file2 file3 to servername1:/path servername2:/path) as well as a scripting interface (ie pssh script file.sh on server1 server2)
 
+**Built by Viking Coders**
 
+Rawr. Things are not pretty. Brute force is acceptable. 
 
 
 **pssh is Copyright [2011] [Greg Nokes]**
