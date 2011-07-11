@@ -40,6 +40,10 @@ else
     puts "I don't know that server...."
     puts "I tried this server name: #{target}"
     puts "Sorry it did not work out..."
+    puts "you might try one of the following:"
+    list_all_servers(@groups).each do |s|
+      puts s
+    end
     #  list_all_servers
     #  TODO: List all servers here
   when 1
