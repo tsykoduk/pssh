@@ -13,14 +13,35 @@ and have an SSH session setup and executed for them, with out knowing what keys 
 
 Taking things a step further, you can restrict all of your internal server's SSH access to just the pssh server(s) ip address, basically creating a choke point for ssh access. Also, when you need to change keys (you do change your keys every 6 - 12 months, right?) it's as easy as just adding the new key files to the pssh server. The users need never know that anything happened.
 
+**pssh In The Wild**
 
-**Getting Started**
+Here is an extreme use case of pssh - valid for hosting providers, or large teams.
+
+*external access*
+
+First off, have two pssh servers set up. Use your load balancer to balance access to them, and either use a shared filesystem or some configuration management tool like Puppet or Chef to create users and managing their access.
+
+*internal servers ssh access*
+
+All of your internal servers should be set up to only allow SSH to and from the pssh cluster. This means that even if someone gets and key off of the pssh server, then cannot easily ssh directly to an internal server, reducing risk.
+
+These servers should be organized into groups. There should be user groups that correspond with these server groups on the pssh servers. Internal keys should have their privileges locked down based on these groups.
+
+*workflow*
+
+Each user that needed command line access to an internal server should be granted an account on the pssh server. I recommend that they provide a ssh key for access. When they are granted access, add them to the groups that grant access to the keys to the servers that they need. They then will be able to use the *pssh list* command to see the names of the servers that they can access, and *pssh ServerName* to build an ssh connection.
+
+From their ssh client of choice, they would *ssh NameOfPsshServer*. I normally set up my local ssh config file with to define the pssh server (or cluster) as pssh, so it would be *ssh pssh*.
+
+They are then connected to the pssh server. If they wanted to ssh to server AppABC, they would simply execute the comment *pssh AppABC* and presto.
+
+**Setup**
 
 There is a bit of setup needed, and a few ways of approaching it.
 
 The most scaleable is a central key repository. We tend to create a /srv/keys directory, and grant folks access to which ever keys they need based on groups (ie, perhaps the sysadmin group needs access to servers 1 and 2, and the devs need access to servers a and b. chown the key for servers 1 and 2 root:sysadmin and the key for a and b root:devs - chmod 640 the entire lot. If the sysadmins also need access to a and b, just put them into the dev group as well.)
 
-I default to a group called "staff" as the general "can go everywhere" type of person. If you want to use a diffrent group - just make sure that you change that in the settings.
+I default to a group called "staff" as the general "can go everywhere" type of person. If you want to use a different group - just make sure that you change that in the settings.
 
 I personally put a symlink to pssh into /bin - and then drop it in a logical place. Users can then just fire off pssh from where ever they are at.
 
@@ -41,7 +62,7 @@ group - the group that has access to this box. ie sysadmin or devs
 
 **Coming soon:**
 
-On the plate for pssh is an scp command with multifile support (ie pssh send file1 file2 file3 to servername1:/path servername2:/path) as well as a scripting interface (ie pssh script file.sh on server1 server2)
+On the plate for pssh is an scp command with multi file support (ie pssh send file1 file2 file3 to servername1:/path servername2:/path and pssh pull /path/to/file/on/local/host) as well as a script execution interface (ie pssh run file.sh on server1 server2)
 
 **Built by Viking Coders**
 
