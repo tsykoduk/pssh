@@ -19,7 +19,7 @@ def woops(target, groups)
   return "you are not authorized to access #{target}. This has been logged, #{whoami}."
 end
 
-def mcp(target, groups)
+def go_mcp(target, groups)
   sshtarget = build_connection(target)
   unless sshtarget == false
     if groups.include?(sshtarget[0]) or groups.include?(@default_group)
