@@ -31,3 +31,22 @@ def go_mcp(target, groups)
     return [0]
   end
 end
+
+def execute_ssh_string(target)
+  ssh_target = go_mcp(target,@groups)
+  case ssh_target[0]
+  when 0
+    puts "I don't know that server...."
+    puts "I tried this server name: #{target}"
+    puts "Sorry it did not work out..."
+    puts "you might try one of the following:"
+    list_all_servers(@groups).each do |s|
+      puts s
+    end
+  when 1
+    puts ssh_target[1]
+  when 2
+    puts "trying: ssh#{ssh_target[1]}"
+    exec "ssh#{ssh_target[1]}"
+  end
+end

@@ -18,13 +18,8 @@ target = ARGV[0].to_s
 #@logz.sev_threshold = Logger::INFO
 
 case target
-when "list"  
-  boxen = list_all_servers(@groups)
-  boxen.each do |s|
-    puts s.tags["short_name"]
-  end
 when "-?", "-h", "--help"
-  puts "usage: 
+  puts "pssh usage: 
   \n  pssh <servername> to connect
   \n  pssh go <servername> to connect 
   \n  pssh list to generate a list
@@ -32,21 +27,23 @@ when "-?", "-h", "--help"
   \n  pssh pull <path/to/file/name> to pull a file from your local machine
   \n  pssh run <script> <servername> to run script on server
   \n  pssh srun <script> <servername> to sudo run a script on a server, passwordless sudo must be set up"
-else
-  ssh_target = go_mcp(target,@groups)
-  case ssh_target[0]
-  when 0
-    puts "I don't know that server...."
-    puts "I tried this server name: #{target}"
-    puts "Sorry it did not work out..."
-    puts "you might try one of the following:"
-    list_all_servers(@groups).each do |s|
-      puts s
-    end
-  when 1
-    puts ssh_target[1]
-  when 2
-    puts "trying: ssh#{ssh_target[1]}"
-    exec "ssh#{ssh_target[1]}"
+when "go"
+  execute_ssh_string(ARGV[1].to_s)
+when 
+when "list"  
+  boxen = list_all_servers(@groups)
+  boxen.each do |s|
+    puts s.tags["short_name"]
   end
+when "push"
+  execute_push(ARGV[1].to_s, ARGV[2].to_s)
+when "pull"
+  execute_pull(ARGV[1].to_s, ARGV[2].to_s)
+when "run"
+  execute_run(ARGV[1].to_s, ARGV[2].to_s)
+when "srun"
+  execute_srun(ARGV[1].to_s, ARGV[2].to_s)
+else
+  puts "I'm assuming that you want to connect to #{target}...Trying now"
+  execute_ssh_string(ARGV[0].to_s)
 end
