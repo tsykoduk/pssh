@@ -29,7 +29,6 @@ when "-?", "-h", "--help"
   \n  pssh srun <script> <servername> to sudo run a script on a server, passwordless sudo must be set up"
 when "go"
   execute_ssh_string(ARGV[1].to_s)
-when 
 when "list"  
   boxen = list_all_servers(@groups)
   boxen.each do |s|
@@ -44,6 +43,6 @@ when "run"
 when "srun"
   execute_srun(ARGV[1].to_s, ARGV[2].to_s)
 else
-  puts "I'm assuming that you want to connect to #{target}...Trying now"
+  puts "I'm assuming that you want to connect to #{target}...Trying now.... "
   execute_ssh_string(ARGV[0].to_s)
 end
