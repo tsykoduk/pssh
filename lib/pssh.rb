@@ -7,7 +7,8 @@ require 'logger'
 
 
 require "#{@pathing}/lib/config.rb"
-require "#{@pathing}/lib/targets.rb"
+require "#{@pathing}/lib/go.rb"
+require "#{@pathing}/lib/aws.rb"
 
 
 #Parse the options, assigning them to the correct variables.
