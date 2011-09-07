@@ -1,5 +1,7 @@
 <h2 id="_pssh"> PSSH</h2>
 
+<p><strong>Now with 25% more flavor, and 50% more group support!</strong></p>
+
 <p>Proxy Secure SHell - a SSH automation tool suitable for use as bastion ssh server, or general hand holder. At this time, only works on AWS. Since it&#8217;s built on the killer @fog gem, it can be easily expanded.</p>
 
 <p><strong>Wait, what?</strong></p>

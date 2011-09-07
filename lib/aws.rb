@@ -6,18 +6,28 @@ def aws_connect
   )
 end
 
-
-def list_all_servers(groups)
+def list_all_servers(groups, default_group)
   compute = aws_connect
-  i = ["List of all currently available servers"]
-  compute.servers.each do |c|
-    if groups.include?(c.tags["group"]) or groups.include?("staff")
-      i += [c]
+  servers_list = []
+  compute.servers.each do |server|
+    if server_visible(server, groups, default_group)
+        servers_list << server   
     end
   end
+  return servers_list
+end
+
+def server_visible(server, groups, default_group)
+  tgt = [server.tags["group"], default_group]
+    if tgt & groups == []
+      return false
+    else
+      return true
+    end
 end
 
 def find_target(target)
   compute = aws_connect
-  compute.servers.all('tag:short_name' => target)
+  fred = compute.servers.all('tag:short_name' => target)
+  return fred.first
 end

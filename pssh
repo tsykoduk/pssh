@@ -12,5 +12,4 @@
 # or list to generate a list of psshable servers
 ###
 
-
-rvm use 1.9.2@pssh && ruby /Users/tsykoduk/Code/pssh/lib/pssh.rb $1
+ruby ./lib/pssh.rb $1
